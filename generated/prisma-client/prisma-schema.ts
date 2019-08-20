@@ -24,6 +24,7 @@ scalar Long
 
 type Message {
   id: ID!
+  content: String!
   createdAt: DateTime!
   updatedAt: DateTime!
   thread: Thread!
@@ -38,6 +39,7 @@ type MessageConnection {
 
 input MessageCreateInput {
   id: ID
+  content: String!
   thread: ThreadCreateOneInput!
   author: UserCreateOneWithoutMessagesInput!
 }
@@ -49,6 +51,7 @@ input MessageCreateManyWithoutAuthorInput {
 
 input MessageCreateWithoutAuthorInput {
   id: ID
+  content: String!
   thread: ThreadCreateOneInput!
 }
 
@@ -60,6 +63,8 @@ type MessageEdge {
 enum MessageOrderByInput {
   id_ASC
   id_DESC
+  content_ASC
+  content_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -68,6 +73,7 @@ enum MessageOrderByInput {
 
 type MessagePreviousValues {
   id: ID!
+  content: String!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -87,6 +93,20 @@ input MessageScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -127,8 +147,17 @@ input MessageSubscriptionWhereInput {
 }
 
 input MessageUpdateInput {
+  content: String
   thread: ThreadUpdateOneRequiredInput
   author: UserUpdateOneRequiredWithoutMessagesInput
+}
+
+input MessageUpdateManyDataInput {
+  content: String
+}
+
+input MessageUpdateManyMutationInput {
+  content: String
 }
 
 input MessageUpdateManyWithoutAuthorInput {
@@ -140,9 +169,16 @@ input MessageUpdateManyWithoutAuthorInput {
   update: [MessageUpdateWithWhereUniqueWithoutAuthorInput!]
   upsert: [MessageUpsertWithWhereUniqueWithoutAuthorInput!]
   deleteMany: [MessageScalarWhereInput!]
+  updateMany: [MessageUpdateManyWithWhereNestedInput!]
+}
+
+input MessageUpdateManyWithWhereNestedInput {
+  where: MessageScalarWhereInput!
+  data: MessageUpdateManyDataInput!
 }
 
 input MessageUpdateWithoutAuthorDataInput {
+  content: String
   thread: ThreadUpdateOneRequiredInput
 }
 
@@ -172,6 +208,20 @@ input MessageWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -202,6 +252,7 @@ input MessageWhereUniqueInput {
 type Mutation {
   createMessage(data: MessageCreateInput!): Message!
   updateMessage(data: MessageUpdateInput!, where: MessageWhereUniqueInput!): Message
+  updateManyMessages(data: MessageUpdateManyMutationInput!, where: MessageWhereInput): BatchPayload!
   upsertMessage(where: MessageWhereUniqueInput!, create: MessageCreateInput!, update: MessageUpdateInput!): Message!
   deleteMessage(where: MessageWhereUniqueInput!): Message
   deleteManyMessages(where: MessageWhereInput): BatchPayload!
