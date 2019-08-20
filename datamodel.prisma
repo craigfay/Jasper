@@ -1,0 +1,21 @@
+type User {
+  id: ID! @id
+  email: String! @unique
+  name: String!
+  threads: [Thread!]! 
+  messages: [Message!]!
+}
+
+type Thread {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  participants: [User!]!
+}
+
+type Message {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  author: [User!]
+}
