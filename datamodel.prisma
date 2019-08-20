@@ -17,5 +17,5 @@ type Message {
   id: ID! @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-  author: [User!]
+  author: User!
 }
