@@ -26,7 +26,8 @@ type Message {
   id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  author(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  thread: Thread!
+  author: User!
 }
 
 type MessageConnection {
@@ -37,7 +38,8 @@ type MessageConnection {
 
 input MessageCreateInput {
   id: ID
-  author: UserCreateManyWithoutMessagesInput
+  thread: ThreadCreateOneInput!
+  author: UserCreateOneWithoutMessagesInput!
 }
 
 input MessageCreateManyWithoutAuthorInput {
@@ -47,6 +49,7 @@ input MessageCreateManyWithoutAuthorInput {
 
 input MessageCreateWithoutAuthorInput {
   id: ID
+  thread: ThreadCreateOneInput!
 }
 
 type MessageEdge {
@@ -124,7 +127,8 @@ input MessageSubscriptionWhereInput {
 }
 
 input MessageUpdateInput {
-  author: UserUpdateManyWithoutMessagesInput
+  thread: ThreadUpdateOneRequiredInput
+  author: UserUpdateOneRequiredWithoutMessagesInput
 }
 
 input MessageUpdateManyWithoutAuthorInput {
@@ -133,7 +137,24 @@ input MessageUpdateManyWithoutAuthorInput {
   connect: [MessageWhereUniqueInput!]
   set: [MessageWhereUniqueInput!]
   disconnect: [MessageWhereUniqueInput!]
+  update: [MessageUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [MessageUpsertWithWhereUniqueWithoutAuthorInput!]
   deleteMany: [MessageScalarWhereInput!]
+}
+
+input MessageUpdateWithoutAuthorDataInput {
+  thread: ThreadUpdateOneRequiredInput
+}
+
+input MessageUpdateWithWhereUniqueWithoutAuthorInput {
+  where: MessageWhereUniqueInput!
+  data: MessageUpdateWithoutAuthorDataInput!
+}
+
+input MessageUpsertWithWhereUniqueWithoutAuthorInput {
+  where: MessageWhereUniqueInput!
+  update: MessageUpdateWithoutAuthorDataInput!
+  create: MessageCreateWithoutAuthorInput!
 }
 
 input MessageWhereInput {
@@ -167,9 +188,8 @@ input MessageWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  author_every: UserWhereInput
-  author_some: UserWhereInput
-  author_none: UserWhereInput
+  thread: ThreadWhereInput
+  author: UserWhereInput
   AND: [MessageWhereInput!]
   OR: [MessageWhereInput!]
   NOT: [MessageWhereInput!]
@@ -257,6 +277,11 @@ input ThreadCreateManyWithoutParticipantsInput {
   connect: [ThreadWhereUniqueInput!]
 }
 
+input ThreadCreateOneInput {
+  create: ThreadCreateInput
+  connect: ThreadWhereUniqueInput
+}
+
 input ThreadCreateWithoutParticipantsInput {
   id: ID
 }
@@ -335,6 +360,10 @@ input ThreadSubscriptionWhereInput {
   NOT: [ThreadSubscriptionWhereInput!]
 }
 
+input ThreadUpdateDataInput {
+  participants: UserUpdateManyWithoutThreadsInput
+}
+
 input ThreadUpdateInput {
   participants: UserUpdateManyWithoutThreadsInput
 }
@@ -346,6 +375,18 @@ input ThreadUpdateManyWithoutParticipantsInput {
   set: [ThreadWhereUniqueInput!]
   disconnect: [ThreadWhereUniqueInput!]
   deleteMany: [ThreadScalarWhereInput!]
+}
+
+input ThreadUpdateOneRequiredInput {
+  create: ThreadCreateInput
+  update: ThreadUpdateDataInput
+  upsert: ThreadUpsertNestedInput
+  connect: ThreadWhereUniqueInput
+}
+
+input ThreadUpsertNestedInput {
+  update: ThreadUpdateDataInput!
+  create: ThreadCreateInput!
 }
 
 input ThreadWhereInput {
@@ -413,14 +454,14 @@ input UserCreateInput {
   messages: MessageCreateManyWithoutAuthorInput
 }
 
-input UserCreateManyWithoutMessagesInput {
-  create: [UserCreateWithoutMessagesInput!]
-  connect: [UserWhereUniqueInput!]
-}
-
 input UserCreateManyWithoutThreadsInput {
   create: [UserCreateWithoutThreadsInput!]
   connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateOneWithoutMessagesInput {
+  create: UserCreateWithoutMessagesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateWithoutMessagesInput {
@@ -540,18 +581,6 @@ input UserUpdateManyMutationInput {
   name: String
 }
 
-input UserUpdateManyWithoutMessagesInput {
-  create: [UserCreateWithoutMessagesInput!]
-  delete: [UserWhereUniqueInput!]
-  connect: [UserWhereUniqueInput!]
-  set: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueWithoutMessagesInput!]
-  upsert: [UserUpsertWithWhereUniqueWithoutMessagesInput!]
-  deleteMany: [UserScalarWhereInput!]
-  updateMany: [UserUpdateManyWithWhereNestedInput!]
-}
-
 input UserUpdateManyWithoutThreadsInput {
   create: [UserCreateWithoutThreadsInput!]
   delete: [UserWhereUniqueInput!]
@@ -569,6 +598,13 @@ input UserUpdateManyWithWhereNestedInput {
   data: UserUpdateManyDataInput!
 }
 
+input UserUpdateOneRequiredWithoutMessagesInput {
+  create: UserCreateWithoutMessagesInput
+  update: UserUpdateWithoutMessagesDataInput
+  upsert: UserUpsertWithoutMessagesInput
+  connect: UserWhereUniqueInput
+}
+
 input UserUpdateWithoutMessagesDataInput {
   email: String
   name: String
@@ -581,18 +617,12 @@ input UserUpdateWithoutThreadsDataInput {
   messages: MessageUpdateManyWithoutAuthorInput
 }
 
-input UserUpdateWithWhereUniqueWithoutMessagesInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateWithoutMessagesDataInput!
-}
-
 input UserUpdateWithWhereUniqueWithoutThreadsInput {
   where: UserWhereUniqueInput!
   data: UserUpdateWithoutThreadsDataInput!
 }
 
-input UserUpsertWithWhereUniqueWithoutMessagesInput {
-  where: UserWhereUniqueInput!
+input UserUpsertWithoutMessagesInput {
   update: UserUpdateWithoutMessagesDataInput!
   create: UserCreateWithoutMessagesInput!
 }
