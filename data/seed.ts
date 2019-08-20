@@ -9,13 +9,26 @@ async function main() {
     email: 'maddy@prisma.io',
     name: 'Maddy',
   })
-  await prisma.createThread({
+  const thread = await prisma.createThread({
     participants: {
       connect: [{
         email: "julien@prisma.io"
       }, {
         email: "maddy@prisma.io"
       }]
+    }
+  })
+  await prisma.createMessage({
+    content: "Hey!",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "maddy@prisma.io"
+      }
     }
   })
 }
