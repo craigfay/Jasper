@@ -17,5 +17,6 @@ type Message {
   id: ID! @id
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
+  thread: Thread!
   author: User!
 }
