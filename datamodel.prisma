@@ -15,6 +15,7 @@ type Thread {
 
 type Message {
   id: ID! @id
+  content: String!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
   thread: Thread!
