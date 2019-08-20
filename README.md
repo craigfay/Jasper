@@ -1,6 +1,4 @@
-## Steps to Recreate
-* `prisma init jasper`
-* `cd jasper`
-* Define datamodel in `datamodel.prisma`
-* `docker-compose up -d`
-* `prisma deploy`# Jasper
+## Commands
+* Start Docker Containers: `docker-compose up -d`
+* Deploy?: `prisma deploy`
+* Re-Run seeds: `prisma seed --reset`
