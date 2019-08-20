@@ -31,6 +31,19 @@ async function main() {
       }
     }
   })
+  await prisma.createMessage({
+    content: "How are you?",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "julien@prisma.io"
+      }
+    }
+  })
 }
 
 main().catch(e => console.error(e))
