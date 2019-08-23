@@ -2,24 +2,24 @@ import { prisma } from '../generated/prisma-client'
 
 async function main() {
   await prisma.createUser({
-    email: 'julien@prisma.io',
-    name: 'Julien',
+    email: 'robert@prisma.io',
+    name: 'Robert',
   })
   await prisma.createUser({
-    email: 'maddy@prisma.io',
-    name: 'Maddy',
+    email: 'alan@prisma.io',
+    name: 'Alan',
   })
   const thread = await prisma.createThread({
     participants: {
       connect: [{
-        email: "julien@prisma.io"
+        email: "robert@prisma.io"
       }, {
-        email: "maddy@prisma.io"
+        email: "alan@prisma.io"
       }]
     }
   })
   await prisma.createMessage({
-    content: "Hey!",
+    content: "Mr Turing, can I tell you a secret?",
     thread: {
       connect: {
         id: thread.id
@@ -27,12 +27,12 @@ async function main() {
     },
     author: {
       connect: {
-        email: "maddy@prisma.io"
+        email: "robert@prisma.io"
       }
     }
   })
   await prisma.createMessage({
-    content: "How are you?",
+    content: "I'm quite good with those.",
     thread: {
       connect: {
         id: thread.id
@@ -40,7 +40,85 @@ async function main() {
     },
     author: {
       connect: {
-        email: "julien@prisma.io"
+        email: "alan@prisma.io"
+      }
+    }
+  })
+  await prisma.createMessage({
+    content: "I'm here to help you.",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "robert@prisma.io"
+      }
+    }
+  })
+  await prisma.createMessage({
+    content: "Oh, clearly!",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "alan@prisma.io"
+      }
+    }
+  })
+  await prisma.createMessage({
+    content: "Can machines think?",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "robert@prisma.io"
+      }
+    }
+  })
+  await prisma.createMessage({
+    content: "Oh, so you've read some of my published works?",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "alan@prisma.io"
+      }
+    }
+  })
+  await prisma.createMessage({
+    content: "What makes you say that?",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "robert@prisma.io"
+      }
+    }
+  })
+  await prisma.createMessage({
+    content: "Oh, because I'm sitting in a police station, accused of entreating a young man to touch my penis, and you've just asked me if machines can think.",
+    thread: {
+      connect: {
+        id: thread.id
+      }
+    },
+    author: {
+      connect: {
+        email: "alan@prisma.io"
       }
     }
   })
