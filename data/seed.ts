@@ -109,19 +109,6 @@ async function main() {
       }
     }
   })
-  await prisma.createMessage({
-    content: "Oh, because I'm sitting in a police station, accused of entreating a young man to touch my penis, and you've just asked me if machines can think.",
-    thread: {
-      connect: {
-        id: thread.id
-      }
-    },
-    author: {
-      connect: {
-        email: "alan@prisma.io"
-      }
-    }
-  })
 }
 
 main().catch(e => console.error(e))
