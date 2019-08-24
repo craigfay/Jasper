@@ -4,9 +4,11 @@ export default async function() {
   const thread = await prisma.createThread({
     participants: {
       connect: [{
-        email: "alistair@prisma.io"
+        email: "hugh@prisma.io"
       }, {
         email: "alan@prisma.io"
+      }, {
+        email: "joan@prisma.io"
       }]
     }
   })
