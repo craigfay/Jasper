@@ -3,7 +3,7 @@ datamodel: ./data/datamodel.prisma
 
 generate:
   - generator: typescript-client
-    output: ./generated/prisma-client/
+    output: ./src/generated/prisma-client/
 
 seed:
   run: npx ts-node ./data/seed.ts

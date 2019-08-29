@@ -1,4 +1,4 @@
-import { prisma } from '../generated/prisma-client'
+import { prisma } from '../src/generated/prisma-client'
 
 export default async function() {
   await prisma.createUser({
