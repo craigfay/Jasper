@@ -175,13 +175,19 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type Role = "ADMIN" | "CUSTOMER";
+
 export type UserOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "email_ASC"
   | "email_DESC"
   | "name_ASC"
-  | "name_DESC";
+  | "name_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "role_ASC"
+  | "role_DESC";
 
 export type ThreadOrderByInput =
   | "id_ASC"
@@ -295,6 +301,24 @@ export interface UserWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  role?: Maybe<Role>;
+  role_not?: Maybe<Role>;
+  role_in?: Maybe<Role[] | Role>;
+  role_not_in?: Maybe<Role[] | Role>;
   threads_every?: Maybe<ThreadWhereInput>;
   threads_some?: Maybe<ThreadWhereInput>;
   threads_none?: Maybe<ThreadWhereInput>;
@@ -412,6 +436,8 @@ export interface MessageCreateWithoutThreadInput {
 export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
   name?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<Role>;
 }
 
 export interface MessageUpdateInput {
@@ -424,6 +450,8 @@ export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   email: String;
   name: String;
+  password: String;
+  role: Role;
   threads?: Maybe<ThreadCreateManyWithoutParticipantsInput>;
   messages?: Maybe<MessageCreateManyWithoutAuthorInput>;
 }
@@ -471,6 +499,8 @@ export interface ThreadUpsertWithWhereUniqueWithoutParticipantsInput {
 export interface UserUpdateWithoutThreadsDataInput {
   email?: Maybe<String>;
   name?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<Role>;
   messages?: Maybe<MessageUpdateManyWithoutAuthorInput>;
 }
 
@@ -638,6 +668,8 @@ export interface MessageScalarWhereInput {
 export interface UserUpdateInput {
   email?: Maybe<String>;
   name?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<Role>;
   threads?: Maybe<ThreadUpdateManyWithoutParticipantsInput>;
   messages?: Maybe<MessageUpdateManyWithoutAuthorInput>;
 }
@@ -749,6 +781,24 @@ export interface UserScalarWhereInput {
   name_not_starts_with?: Maybe<String>;
   name_ends_with?: Maybe<String>;
   name_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  role?: Maybe<Role>;
+  role_not?: Maybe<Role>;
+  role_in?: Maybe<Role[] | Role>;
+  role_not_in?: Maybe<Role[] | Role>;
   AND?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   OR?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
   NOT?: Maybe<UserScalarWhereInput[] | UserScalarWhereInput>;
@@ -758,6 +808,8 @@ export interface UserCreateWithoutThreadsInput {
   id?: Maybe<ID_Input>;
   email: String;
   name: String;
+  password: String;
+  role: Role;
   messages?: Maybe<MessageCreateManyWithoutAuthorInput>;
 }
 
@@ -770,12 +822,16 @@ export interface UserCreateWithoutMessagesInput {
   id?: Maybe<ID_Input>;
   email: String;
   name: String;
+  password: String;
+  role: Role;
   threads?: Maybe<ThreadCreateManyWithoutParticipantsInput>;
 }
 
 export interface UserUpdateManyDataInput {
   email?: Maybe<String>;
   name?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<Role>;
 }
 
 export interface ThreadUpdateInput {
@@ -822,6 +878,8 @@ export interface ThreadUpdateManyWithoutParticipantsInput {
 export interface UserUpdateWithoutMessagesDataInput {
   email?: Maybe<String>;
   name?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<Role>;
   threads?: Maybe<ThreadUpdateManyWithoutParticipantsInput>;
 }
 
@@ -867,6 +925,8 @@ export interface UserPreviousValues {
   id: ID_Output;
   email: String;
   name: String;
+  password: String;
+  role: Role;
 }
 
 export interface UserPreviousValuesPromise
@@ -875,6 +935,8 @@ export interface UserPreviousValuesPromise
   id: () => Promise<ID_Output>;
   email: () => Promise<String>;
   name: () => Promise<String>;
+  password: () => Promise<String>;
+  role: () => Promise<Role>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -883,6 +945,8 @@ export interface UserPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   email: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  role: () => Promise<AsyncIterator<Role>>;
 }
 
 export interface MessageEdge {
@@ -906,12 +970,16 @@ export interface User {
   id: ID_Output;
   email: String;
   name: String;
+  password: String;
+  role: Role;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   email: () => Promise<String>;
   name: () => Promise<String>;
+  password: () => Promise<String>;
+  role: () => Promise<Role>;
   threads: <T = FragmentableArray<Thread>>(args?: {
     where?: ThreadWhereInput;
     orderBy?: ThreadOrderByInput;
@@ -938,6 +1006,8 @@ export interface UserSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   email: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  role: () => Promise<AsyncIterator<Role>>;
   threads: <T = Promise<AsyncIterator<ThreadSubscription>>>(args?: {
     where?: ThreadWhereInput;
     orderBy?: ThreadOrderByInput;
@@ -964,6 +1034,8 @@ export interface UserNullablePromise
   id: () => Promise<ID_Output>;
   email: () => Promise<String>;
   name: () => Promise<String>;
+  password: () => Promise<String>;
+  role: () => Promise<Role>;
   threads: <T = FragmentableArray<Thread>>(args?: {
     where?: ThreadWhereInput;
     orderBy?: ThreadOrderByInput;
@@ -1450,6 +1522,10 @@ export type String = string;
 export const models: Model[] = [
   {
     name: "User",
+    embedded: false
+  },
+  {
+    name: "Role",
     embedded: false
   },
   {

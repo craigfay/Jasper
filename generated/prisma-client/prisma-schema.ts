@@ -338,6 +338,11 @@ type Query {
   node(id: ID!): Node
 }
 
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
 type Subscription {
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   thread(where: ThreadSubscriptionWhereInput): ThreadSubscriptionPayload
@@ -555,6 +560,8 @@ type User {
   id: ID!
   email: String!
   name: String!
+  password: String!
+  role: Role!
   threads(where: ThreadWhereInput, orderBy: ThreadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Thread!]
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
 }
@@ -569,6 +576,8 @@ input UserCreateInput {
   id: ID
   email: String!
   name: String!
+  password: String!
+  role: Role!
   threads: ThreadCreateManyWithoutParticipantsInput
   messages: MessageCreateManyWithoutAuthorInput
 }
@@ -587,6 +596,8 @@ input UserCreateWithoutMessagesInput {
   id: ID
   email: String!
   name: String!
+  password: String!
+  role: Role!
   threads: ThreadCreateManyWithoutParticipantsInput
 }
 
@@ -594,6 +605,8 @@ input UserCreateWithoutThreadsInput {
   id: ID
   email: String!
   name: String!
+  password: String!
+  role: Role!
   messages: MessageCreateManyWithoutAuthorInput
 }
 
@@ -609,12 +622,18 @@ enum UserOrderByInput {
   email_DESC
   name_ASC
   name_DESC
+  password_ASC
+  password_DESC
+  role_ASC
+  role_DESC
 }
 
 type UserPreviousValues {
   id: ID!
   email: String!
   name: String!
+  password: String!
+  role: Role!
 }
 
 input UserScalarWhereInput {
@@ -660,6 +679,24 @@ input UserScalarWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  role: Role
+  role_not: Role
+  role_in: [Role!]
+  role_not_in: [Role!]
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -686,6 +723,8 @@ input UserSubscriptionWhereInput {
 input UserUpdateInput {
   email: String
   name: String
+  password: String
+  role: Role
   threads: ThreadUpdateManyWithoutParticipantsInput
   messages: MessageUpdateManyWithoutAuthorInput
 }
@@ -693,11 +732,15 @@ input UserUpdateInput {
 input UserUpdateManyDataInput {
   email: String
   name: String
+  password: String
+  role: Role
 }
 
 input UserUpdateManyMutationInput {
   email: String
   name: String
+  password: String
+  role: Role
 }
 
 input UserUpdateManyWithoutThreadsInput {
@@ -727,12 +770,16 @@ input UserUpdateOneRequiredWithoutMessagesInput {
 input UserUpdateWithoutMessagesDataInput {
   email: String
   name: String
+  password: String
+  role: Role
   threads: ThreadUpdateManyWithoutParticipantsInput
 }
 
 input UserUpdateWithoutThreadsDataInput {
   email: String
   name: String
+  password: String
+  role: Role
   messages: MessageUpdateManyWithoutAuthorInput
 }
 
@@ -795,6 +842,24 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  role: Role
+  role_not: Role
+  role_in: [Role!]
+  role_not_in: [Role!]
   threads_every: ThreadWhereInput
   threads_some: ThreadWhereInput
   threads_none: ThreadWhereInput
