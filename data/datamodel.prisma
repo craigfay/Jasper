@@ -2,8 +2,15 @@ type User {
   id: ID! @id
   email: String! @unique
   name: String!
+  password: String!
+  role: Role!
   threads: [Thread!]! 
   messages: [Message!]!
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
 }
 
 type Thread {
