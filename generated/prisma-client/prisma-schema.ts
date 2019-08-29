@@ -338,11 +338,6 @@ type Query {
   node(id: ID!): Node
 }
 
-enum Role {
-  ADMIN
-  CUSTOMER
-}
-
 type Subscription {
   message(where: MessageSubscriptionWhereInput): MessageSubscriptionPayload
   thread(where: ThreadSubscriptionWhereInput): ThreadSubscriptionPayload
@@ -561,7 +556,6 @@ type User {
   email: String!
   name: String!
   password: String!
-  role: Role!
   threads(where: ThreadWhereInput, orderBy: ThreadOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Thread!]
   messages(where: MessageWhereInput, orderBy: MessageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Message!]
 }
@@ -577,7 +571,6 @@ input UserCreateInput {
   email: String!
   name: String!
   password: String!
-  role: Role!
   threads: ThreadCreateManyWithoutParticipantsInput
   messages: MessageCreateManyWithoutAuthorInput
 }
@@ -597,7 +590,6 @@ input UserCreateWithoutMessagesInput {
   email: String!
   name: String!
   password: String!
-  role: Role!
   threads: ThreadCreateManyWithoutParticipantsInput
 }
 
@@ -606,7 +598,6 @@ input UserCreateWithoutThreadsInput {
   email: String!
   name: String!
   password: String!
-  role: Role!
   messages: MessageCreateManyWithoutAuthorInput
 }
 
@@ -624,8 +615,6 @@ enum UserOrderByInput {
   name_DESC
   password_ASC
   password_DESC
-  role_ASC
-  role_DESC
 }
 
 type UserPreviousValues {
@@ -633,7 +622,6 @@ type UserPreviousValues {
   email: String!
   name: String!
   password: String!
-  role: Role!
 }
 
 input UserScalarWhereInput {
@@ -693,10 +681,6 @@ input UserScalarWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  role: Role
-  role_not: Role
-  role_in: [Role!]
-  role_not_in: [Role!]
   AND: [UserScalarWhereInput!]
   OR: [UserScalarWhereInput!]
   NOT: [UserScalarWhereInput!]
@@ -724,7 +708,6 @@ input UserUpdateInput {
   email: String
   name: String
   password: String
-  role: Role
   threads: ThreadUpdateManyWithoutParticipantsInput
   messages: MessageUpdateManyWithoutAuthorInput
 }
@@ -733,14 +716,12 @@ input UserUpdateManyDataInput {
   email: String
   name: String
   password: String
-  role: Role
 }
 
 input UserUpdateManyMutationInput {
   email: String
   name: String
   password: String
-  role: Role
 }
 
 input UserUpdateManyWithoutThreadsInput {
@@ -771,7 +752,6 @@ input UserUpdateWithoutMessagesDataInput {
   email: String
   name: String
   password: String
-  role: Role
   threads: ThreadUpdateManyWithoutParticipantsInput
 }
 
@@ -779,7 +759,6 @@ input UserUpdateWithoutThreadsDataInput {
   email: String
   name: String
   password: String
-  role: Role
   messages: MessageUpdateManyWithoutAuthorInput
 }
 
@@ -856,10 +835,6 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  role: Role
-  role_not: Role
-  role_in: [Role!]
-  role_not_in: [Role!]
   threads_every: ThreadWhereInput
   threads_some: ThreadWhereInput
   threads_none: ThreadWhereInput
